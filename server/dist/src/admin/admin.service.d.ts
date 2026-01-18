@@ -4,4 +4,5 @@ export declare class AdminService {
     constructor(prisma: PrismaService);
     executeSql(query: string): Promise<any>;
     listTables(): Promise<any>;
+    getBirthdays(): Promise<any>;
 }

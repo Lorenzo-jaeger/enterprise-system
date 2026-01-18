@@ -38,6 +38,27 @@ let AdminService = class AdminService {
         const result = await this.prisma.$queryRawUnsafe(query);
         return result.map((row) => row.table_name);
     }
+    async getBirthdays() {
+        const query = `
+        SELECT u.name, p."avatarUrl", p.bio, p.birthday
+        FROM "User" u
+        JOIN "Profile" p ON u.id = p."userId"
+        WHERE 
+            EXTRACT(MONTH FROM p.birthday) = EXTRACT(MONTH FROM CURRENT_DATE)
+            AND (
+                EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE)
+                OR EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE + INTERVAL '1 day')
+            )
+        LIMIT 10;
+      `;
+        const result = await this.prisma.$queryRawUnsafe(query);
+        return result.map((r) => ({
+            name: r.name,
+            role: r.bio || 'Employee',
+            img: r.avatarUrl,
+            isToday: new Date(r.birthday).getDate() === new Date().getDate()
+        }));
+    }
 };
 exports.AdminService = AdminService;
 exports.AdminService = AdminService = __decorate([

@@ -87,7 +87,7 @@ export default function SqlPlaygroundPage() {
         if (!token) return
         setLoadingTables(true)
         try {
-            const res = await fetch("http://localhost:3000/admin/tables", {
+            const res = await fetch("http://localhost:3001/admin/tables", {
                 headers: { "Authorization": `Bearer ${token}` }
             })
             if (res.ok) {
@@ -123,7 +123,7 @@ export default function SqlPlaygroundPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/admin/sql", {
+      const response = await fetch("http://localhost:3001/admin/sql", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -236,7 +236,7 @@ export default function SqlPlaygroundPage() {
             
             console.log("Executando Update:", query) // Debug log to console
 
-            const res = await fetch("http://localhost:3000/admin/sql", {
+            const res = await fetch("http://localhost:3001/admin/sql", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -285,7 +285,7 @@ export default function SqlPlaygroundPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full gap-4 p-4 pt-16 overflow-hidden bg-background">
+    <div className="flex flex-col md:flex-row h-full w-full gap-4 p-4 overflow-hidden bg-background">
         {/* Sidebar - Table List */}
         <Card className="w-full md:w-72 flex-shrink-0 flex flex-col max-h-[30vh] md:max-h-full">
             <CardHeader className="p-4 border-b space-y-2">
@@ -400,7 +400,7 @@ export default function SqlPlaygroundPage() {
             </Card>
 
             {/* Results */}
-            <Card className="flex-1 flex flex-col min-h-[500px] shadow-sm border-muted-foreground/20 overflow-hidden">
+            <Card className="flex-1 flex flex-col shadow-sm border-muted-foreground/20 overflow-hidden py-0 gap-0">
                  <div className="flex-1 overflow-auto p-0 relative w-full h-full">
                     {error && (
                         <div className="p-4 bg-red-950/30 text-red-400 font-mono text-sm border-b border-red-900 sticky top-0 z-20">
@@ -430,7 +430,7 @@ export default function SqlPlaygroundPage() {
                                             return (
                                             <td 
                                                 key={j} 
-                                                className={`px-4 py-2 font-mono text-xs border-r last:border-r-0 cursor-pointer whitespace-nowrap max-w-[400px] overflow-hidden text-ellipsis hover:whitespace-normal hover:break-all hover:bg-muted ${hasChanged ? 'bg-yellow-500/10' : ''}`}
+                                                className={`px-4 py-2 font-mono text-xs border-r last:border-r-0 cursor-pointer whitespace-nowrap max-w-[400px] overflow-hidden text-ellipsis hover:bg-muted ${hasChanged ? 'bg-yellow-500/10' : ''}`}
                                                 onDoubleClick={() => handleCellClick(row, colName)}
                                                 title={typeof displayValue === 'object' ? JSON.stringify(displayValue) : String(displayValue)}
                                             >

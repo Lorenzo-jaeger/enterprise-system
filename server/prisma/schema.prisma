@@ -57,6 +57,7 @@ model Profile {
   avatarUrl String?
   address   String?
   phone     String?
+  birthday  DateTime?
   
   userId    String  @unique
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)

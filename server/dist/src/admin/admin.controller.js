@@ -30,6 +30,9 @@ let AdminController = class AdminController {
     async listTables() {
         return this.adminService.listTables();
     }
+    async getBirthdays() {
+        return this.adminService.getBirthdays();
+    }
 };
 exports.AdminController = AdminController;
 __decorate([
@@ -49,6 +52,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "listTables", null);
+__decorate([
+    (0, common_1.Get)('birthdays'),
+    (0, roles_decorator_1.Roles)('ADMIN', 'MANAGER', 'USER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get birthdays of the day' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getBirthdays", null);
 exports.AdminController = AdminController = __decorate([
     (0, swagger_1.ApiTags)('admin'),
     (0, swagger_1.ApiBearerAuth)(),

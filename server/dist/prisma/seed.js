@@ -69,7 +69,119 @@ async function main() {
             }
         }
     });
-    console.log({ user });
+    const managerRole = await prisma.role.upsert({
+        where: { name: 'MANAGER' },
+        update: {},
+        create: {
+            name: 'MANAGER',
+            description: 'Dashboard Manager',
+            permissions: {
+                create: [
+                    { action: 'dashboard:view' },
+                    { action: 'reports:read' },
+                    { action: 'users:read' }
+                ]
+            }
+        },
+    });
+    const managerUser = await prisma.user.upsert({
+        where: { email: 'manager@enterprise.com' },
+        update: {},
+        create: {
+            email: 'manager@enterprise.com',
+            name: 'Manager Dash',
+            password: hashedPassword,
+            roles: {
+                connect: { id: managerRole.id }
+            },
+            profile: {
+                create: {
+                    bio: 'Dashboard Supervisor',
+                    avatarUrl: 'https://i.pravatar.cc/150?u=manager'
+                }
+            }
+        }
+    });
+    const userRole = await prisma.role.upsert({
+        where: { name: 'USER' },
+        update: {},
+        create: {
+            name: 'USER',
+            description: 'End User',
+            permissions: {
+                create: [
+                    { action: 'profile:read' },
+                    { action: 'profile:update' },
+                    { action: 'tasks:read' }
+                ]
+            }
+        },
+    });
+    const finalUser = await prisma.user.upsert({
+        where: { email: 'user@enterprise.com' },
+        update: {},
+        create: {
+            email: 'user@enterprise.com',
+            name: 'Usuario Final',
+            password: hashedPassword,
+            roles: {
+                connect: { id: userRole.id }
+            },
+            profile: {
+                create: {
+                    bio: 'Standard User',
+                    avatarUrl: 'https://i.pravatar.cc/150?u=user'
+                }
+            }
+        }
+    });
+    const birthdayToday = await prisma.user.upsert({
+        where: { email: 'birthday@enterprise.com' },
+        update: {
+            profile: {
+                update: {
+                    birthday: new Date()
+                }
+            }
+        },
+        create: {
+            email: 'birthday@enterprise.com',
+            name: 'Aniversariante do Dia',
+            password: hashedPassword,
+            roles: { connect: { id: userRole.id } },
+            profile: {
+                create: {
+                    bio: 'Happy Birthday!',
+                    birthday: new Date(),
+                    avatarUrl: 'https://i.pravatar.cc/150?u=bday'
+                }
+            }
+        }
+    });
+    const birthdayTomorrow = await prisma.user.upsert({
+        where: { email: 'tomorrow@enterprise.com' },
+        update: {
+            profile: {
+                update: {
+                    birthday: new Date(new Date().setDate(new Date().getDate() + 1))
+                }
+            }
+        },
+        create: {
+            email: 'tomorrow@enterprise.com',
+            name: 'Aniversariante de Amanhã',
+            password: hashedPassword,
+            roles: { connect: { id: userRole.id } },
+            profile: {
+                create: {
+                    bio: 'Almost there!',
+                    birthday: new Date(new Date().setDate(new Date().getDate() + 1)),
+                    avatarUrl: 'https://i.pravatar.cc/150?u=tmrw'
+                }
+            }
+        }
+    });
+    console.log({ admin: user, manager: managerUser, user: finalUser });
 }
 main()
     .then(async () => {

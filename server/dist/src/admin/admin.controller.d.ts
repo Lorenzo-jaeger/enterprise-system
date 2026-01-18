@@ -6,4 +6,5 @@ export declare class AdminController {
         query: string;
     }): Promise<any>;
     listTables(): Promise<any>;
+    getBirthdays(): Promise<any>;
 }

@@ -44,7 +44,7 @@ export function LoginForm() {
     setIsLoading(true)
     try {
       // TODO: Move API URL to env var
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -59,7 +59,7 @@ export function LoginForm() {
 
       // Precisamos decodificar o token ou pegar os dados do user de outra rota
       // Por simplicidade agora, vamos buscar o profile logo em seguida
-      const profileResponse = await fetch("http://localhost:3000/auth/profile", {
+      const profileResponse = await fetch("http://localhost:3001/auth/profile", {
         headers: { Authorization: `Bearer ${data.access_token}` },
       })
       
@@ -67,7 +67,7 @@ export function LoginForm() {
 
       setAuth(data.access_token, user)
       toast.success("Login realizado com sucesso!")
-      router.push("/dashboard") // Redirecionar para dashboard
+      router.push("/admin") // Redirecionar para dashboard (Admin)
 
     } catch (error) {
       toast.error("Erro ao entrar. Verifique seu e-mail e senha.")

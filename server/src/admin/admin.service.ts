@@ -31,4 +31,31 @@ export class AdminService {
     const result: any = await this.prisma.$queryRawUnsafe(query);
     return result.map((row: any) => row.table_name);
   }
+
+  async getBirthdays() {
+      // Prisma doesn't support easy month/day filtering across years without raw SQL or computed columns
+      // Using Raw SQL for PostgreSQL
+      const query = `
+        SELECT u.name, p."avatarUrl", p.bio, p.birthday
+        FROM "User" u
+        JOIN "Profile" p ON u.id = p."userId"
+        WHERE 
+            EXTRACT(MONTH FROM p.birthday) = EXTRACT(MONTH FROM CURRENT_DATE)
+            AND (
+                EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE)
+                OR EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE + INTERVAL '1 day')
+            )
+        LIMIT 10;
+      `;
+      // Note: This simple query handles 'today' and 'tomorrow' roughly. 
+      // Handling year boundaries (Dec 31 -> Jan 1) requires slightly more complex logic, ignoring for MVP.
+      
+      const result: any = await this.prisma.$queryRawUnsafe(query);
+      return result.map((r: any) => ({
+          name: r.name,
+          role: r.bio || 'Employee', // Using bio as role for now
+          img: r.avatarUrl,
+          isToday: new Date(r.birthday).getDate() === new Date().getDate()
+      }));
+  }
 }

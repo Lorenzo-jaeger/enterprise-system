@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 import { Toaster } from "@/components/ui/sonner";
 
-import { ThemeProvider } from "@/components/providers/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider"
 import { UserNav } from "@/components/organisms/user-nav"
 
 export const metadata: Metadata = {
@@ -39,12 +39,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            <div className="relative min-h-screen">
-                <div className="absolute top-4 right-4 z-50">
-                    <UserNav />
-                </div>
-                {children}
-            </div>
+            {children}
             <Toaster />
         </ThemeProvider>
       </body>

@@ -25,4 +25,11 @@ export class AdminController {
   async listTables() {
     return this.adminService.listTables();
   }
+
+  @Get('birthdays')
+  @Roles('ADMIN', 'MANAGER', 'USER') // All auth users can see birthdays
+  @ApiOperation({ summary: 'Get birthdays of the day' })
+  async getBirthdays() {
+      return this.adminService.getBirthdays();
+  }
 }
