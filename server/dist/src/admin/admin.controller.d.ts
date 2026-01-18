@@ -1,0 +1,9 @@
+import { AdminService } from './admin.service';
+export declare class AdminController {
+    private readonly adminService;
+    constructor(adminService: AdminService);
+    executeSql(body: {
+        query: string;
+    }): Promise<any>;
+    listTables(): Promise<any>;
+}
