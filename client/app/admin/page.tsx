@@ -19,7 +19,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Scrollable Main Content with Lenis Smooth Scroll */}
-        <SmoothScroll className="flex-1 p-6 md:p-8 space-y-8">
+        <SmoothScroll className="flex-1 p-2 md:p-4 space-y-8">
             
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {/* Main Content Column (3/4 width) */}
@@ -31,8 +31,8 @@ export default function AdminDashboard() {
                     <NewsFeed />
                 </div>
 
-                {/* Right Sidebar Column (1/3 width) */}
-                <div className="space-y-6">
+                {/* Right Sidebar Column (1/3 width) - Sticky top-0 */}
+                <div className="space-y-6 sticky top-0 self-start">
                     {/* Birthdays (Top) */}
                     <BirthdayList />
 

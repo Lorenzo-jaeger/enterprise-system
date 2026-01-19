@@ -32,4 +32,18 @@ export class AdminController {
   async getBirthdays() {
       return this.adminService.getBirthdays();
   }
+
+  @Get('anniversaries')
+  @Roles('ADMIN', 'MANAGER', 'USER')
+  @ApiOperation({ summary: 'Get work anniversaries of the day' })
+  async getWorkAnniversaries() {
+      return this.adminService.getWorkAnniversaries();
+  }
+
+  @Get('new-hires')
+  @Roles('ADMIN', 'MANAGER', 'USER')
+  @ApiOperation({ summary: 'Get new hires (last 30 days)' })
+  async getNewHires() {
+      return this.adminService.getNewHires();
+  }
 }

@@ -7,4 +7,11 @@ export declare class AdminController {
     }): Promise<any>;
     listTables(): Promise<any>;
     getBirthdays(): Promise<any>;
+    getWorkAnniversaries(): Promise<any>;
+    getNewHires(): Promise<{
+        name: string | null;
+        role: string;
+        img: string | null;
+        date: string;
+    }[]>;
 }

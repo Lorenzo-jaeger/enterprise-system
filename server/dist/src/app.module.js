@@ -15,12 +15,13 @@ const auth_module_1 = require("./auth/auth.module");
 const prisma_module_1 = require("./prisma.module");
 const admin_module_1 = require("./admin/admin.module");
 const mail_module_1 = require("./mail/mail.module");
+const news_module_1 = require("./news/news.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [users_module_1.UsersModule, auth_module_1.AuthModule, prisma_module_1.PrismaModule, admin_module_1.AdminModule, mail_module_1.MailModule],
+        imports: [users_module_1.UsersModule, auth_module_1.AuthModule, prisma_module_1.PrismaModule, admin_module_1.AdminModule, mail_module_1.MailModule, news_module_1.NewsModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

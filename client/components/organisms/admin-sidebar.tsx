@@ -17,7 +17,9 @@ import {
   Menu,
   Zap,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Newspaper,
+  LineChart
 } from "lucide-react"
 import { useAuthStore } from "@/lib/store/auth-store"
 import { useUiStore } from "@/lib/store/ui-store" // Import Store
@@ -59,6 +61,18 @@ export function AdminSidebar({ className }: SidebarProps) {
             icon: Database,
             href: "/admin/sql",
             active: pathname === "/admin/sql",
+        },
+        {
+            label: "Notícias",
+            icon: Newspaper,
+            href: "/admin/news-manage",
+            active: pathname === "/admin/news-manage",
+        },
+        {
+            label: "Métricas",
+            icon: LineChart,
+            href: "/admin/analytics",
+            active: pathname === "/admin/analytics",
         },
         {
             label: "Usuários",

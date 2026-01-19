@@ -34,7 +34,7 @@ export function HeroBanner() {
     const prev = () => setCurrent((curr) => (curr - 1 + slides.length) % slides.length)
 
     return (
-        <div className="relative group rounded-xl overflow-hidden min-h-[320px] shadow-lg">
+        <div className="relative group rounded-xl overflow-hidden min-h-[290px] shadow-lg">
             {slides.map((slide, index) => (
                 <div 
                     key={slide.id}

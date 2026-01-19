@@ -51,6 +51,33 @@ model Permission {
   updatedAt   DateTime @updatedAt
 }
 
+model Department {
+  id          String   @id @default(uuid())
+  name        String   // e.g. "Technology", "TechOps", "Support"
+  description String?
+  
+  // Hierarchy
+  parentId    String?
+  parent      Department? @relation("DepartmentHierarchy", fields: [parentId], references: [id])
+  children    Department[] @relation("DepartmentHierarchy")
+
+  profiles    Profile[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JobTitle {
+  id          String   @id @default(uuid())
+  name        String   // e.g. "Software Engineer", "Head of Projects"
+  level       Int?     // e.g. 1-10 for sorting seniority
+  
+  profiles    Profile[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Profile {
   id        String  @id @default(uuid())
   bio       String?
@@ -58,9 +85,67 @@ model Profile {
   address   String?
   phone     String?
   birthday  DateTime?
+  joinedAt  DateTime? @default(now()) // Tenure
+  seniority String?   // e.g. "Senior", "Junior", "Specialist"
   
   userId    String  @unique
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Organizational
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  
+  jobTitleId   String?
+  jobTitle     JobTitle? @relation(fields: [jobTitleId], references: [id])
+
+  // Reporting Line
+  managerId    String?
+  manager      Profile?  @relation("ReportingLine", fields: [managerId], references: [id])
+  reports      Profile[] @relation("ReportingLine")
+
+  // Social
+  newsLikes    NewsLike[]
+  newsViews    NewsView[]
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  summary     String
+  content     String   // Full HTML/Markdown content
+  image       String?
+  category    String   // e.g. "Corporativo", "Rh", "Financeiro"
+  publishDate DateTime @default(now())
+  
+  likes       NewsLike[]
+  views       NewsView[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model NewsLike {
+  id        String   @id @default(uuid())
+  newsId    String
+  news      News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([newsId, profileId])
+}
+
+model NewsView {
+  id        String   @id @default(uuid())
+  newsId    String
+  news      News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  viewedAt  DateTime @default(now())
 }
 
 model AuditLog {

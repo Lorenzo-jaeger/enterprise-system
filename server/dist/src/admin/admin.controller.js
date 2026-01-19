@@ -33,6 +33,12 @@ let AdminController = class AdminController {
     async getBirthdays() {
         return this.adminService.getBirthdays();
     }
+    async getWorkAnniversaries() {
+        return this.adminService.getWorkAnniversaries();
+    }
+    async getNewHires() {
+        return this.adminService.getNewHires();
+    }
 };
 exports.AdminController = AdminController;
 __decorate([
@@ -60,6 +66,22 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "getBirthdays", null);
+__decorate([
+    (0, common_1.Get)('anniversaries'),
+    (0, roles_decorator_1.Roles)('ADMIN', 'MANAGER', 'USER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get work anniversaries of the day' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getWorkAnniversaries", null);
+__decorate([
+    (0, common_1.Get)('new-hires'),
+    (0, roles_decorator_1.Roles)('ADMIN', 'MANAGER', 'USER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get new hires (last 30 days)' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getNewHires", null);
 exports.AdminController = AdminController = __decorate([
     (0, swagger_1.ApiTags)('admin'),
     (0, swagger_1.ApiBearerAuth)(),
