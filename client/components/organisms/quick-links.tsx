@@ -34,7 +34,7 @@ export function QuickLinks({ className }: { className?: string }) {
             <CardHeader className="p-3 border-b border-border/40 bg-muted/20">
                 <CardTitle className="text-sm font-semibold tracking-tight text-foreground flex items-center justify-start">
                     <div className="flex items-center gap-2">
-                        <ExternalLink className="h-4 w-4 text-primary" />
+                        <ExternalLink className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />
                         <span>Acesso Rápido</span>
                     </div>
                 </CardTitle>
@@ -42,13 +42,13 @@ export function QuickLinks({ className }: { className?: string }) {
             <CardContent className="p-0">
                 <div className="flex flex-col">
                     {displayedLinks.map((link, i) => (
-                        <a 
-                            key={i} 
+                        <a
+                            key={i}
                             href={link.href}
                             className={`flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-muted/30 group cursor-pointer ${i !== displayedLinks.length - 1 ? 'border-b border-border/40' : ''}`}
                         >
-                            <div className={`h-8 w-8 rounded-lg ${link.color} bg-opacity-10 dark:bg-opacity-10 flex items-center justify-center transition-transform group-hover:scale-105`}>
-                                <link.icon className={`h-4 w-4 ${link.color}`} />
+                            <div className={`h-8 w-8 rounded-lg bg-opacity-10 dark:bg-opacity-10 flex items-center justify-center transition-transform group-hover:scale-105`} style={{ backgroundColor: 'rgba(191, 161, 95, 0.1)' }}>
+                                <link.icon className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />
                             </div>
                             <span className="text-[13px] font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                                 {link.label}
@@ -56,7 +56,7 @@ export function QuickLinks({ className }: { className?: string }) {
                             <ChevronRight className="h-3.5 w-3.5 ml-auto text-muted-foreground/30 group-hover:text-muted-foreground transition-all" />
                         </a>
                     ))}
-                    
+
                     {links.length > 4 && (
                         <Dialog open={open} onOpenChange={setOpen}>
                             <div className="p-2 border-t border-border/40">
@@ -72,13 +72,13 @@ export function QuickLinks({ className }: { className?: string }) {
                                 </DialogHeader>
                                 <div className="grid grid-cols-2 gap-4 py-4">
                                     {links.map((link, i) => (
-                                        <a 
-                                            key={i} 
+                                        <a
+                                            key={i}
                                             href={link.href}
                                             className="flex items-center gap-3 p-3 rounded-xl border border-border/50 hover:bg-accent/50 hover:border-border transition-all cursor-pointer group"
                                         >
-                                            <div className={`h-10 w-10 rounded-xl ${link.color} bg-opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                                <link.icon className={`h-5 w-5 ${link.color}`} />
+                                            <div className={`h-10 w-10 rounded-xl bg-opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform`} style={{ backgroundColor: 'rgba(191, 161, 95, 0.1)' }}>
+                                                <link.icon className="h-5 w-5" style={{ color: 'var(--icon-color)' }} />
                                             </div>
                                             <span className="text-sm font-medium">{link.label}</span>
                                         </a>

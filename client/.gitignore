@@ -19,6 +19,7 @@
 
 # production
 /build
+/client/public/signature-assets
 
 # misc
 .DS_Store

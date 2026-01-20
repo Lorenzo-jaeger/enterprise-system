@@ -21,7 +21,7 @@ async function main() {
   // 2. Create Departments (Areas & Teams)
   // Structure: Technology -> [TechOps, Infra & Security]
   //            Infra & Security -> [Support, Governance]
-  
+
   const techArea = await prisma.department.create({
     data: { name: 'Technology', description: 'Tech Area' }
   })
@@ -59,8 +59,8 @@ async function main() {
 
   // Helper to get profile ID
   const getProfileId = async (userId: string) => {
-      const p = await prisma.profile.findUnique({ where: { userId } })
-      return p?.id
+    const p = await prisma.profile.findUnique({ where: { userId } })
+    return p?.id
   }
 
   // --- Head of TechOps (User request: "head de techops tem só 3 devs, e nao tem nada de lider") ---
@@ -103,12 +103,12 @@ async function main() {
           seniority: 'Senior',
           departmentId: techOpsTeam.id,
           jobTitleId: seniorTitle.id,
-          managerId: headTechOpsProfileId 
+          managerId: headTechOpsProfileId
         }
       }
     }
   })
-  
+
   // Dev 2 (New Hire - joined 5 days ago)
   await prisma.user.create({
     data: {
@@ -134,22 +134,22 @@ async function main() {
   // Dev 3 (Work Anniversary today - 2 years)
   await prisma.user.create({
     data: {
-        email: 'dev3@enterprise.com',
-        password,
-        name: 'Julia Anniversary',
-        roles: { connect: { id: userRole.id } },
-        profile: {
-            create: {
-                bio: 'Full Dev',
-                avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-                birthday: new Date('1995-11-20'),
-                joinedAt: new Date(new Date().setFullYear(new Date().getFullYear() - 2)), // 2 years ago exact
-                seniority: 'Full',
-                departmentId: techOpsTeam.id,
-                jobTitleId: fullTitle.id,
-                managerId: headTechOpsProfileId
-            }
+      email: 'dev3@enterprise.com',
+      password,
+      name: 'Julia Anniversary',
+      roles: { connect: { id: userRole.id } },
+      profile: {
+        create: {
+          bio: 'Full Dev',
+          avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
+          birthday: new Date('1995-11-20'),
+          joinedAt: new Date(new Date().setFullYear(new Date().getFullYear() - 2)), // 2 years ago exact
+          seniority: 'Full',
+          departmentId: techOpsTeam.id,
+          jobTitleId: fullTitle.id,
+          managerId: headTechOpsProfileId
         }
+      }
     }
   })
 
@@ -164,7 +164,7 @@ async function main() {
         create: {
           bio: 'Head of Infra & Sec',
           avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
-          birthday: new Date('1980-03-30'), 
+          birthday: new Date('1980-03-30'),
           joinedAt: new Date('2018-01-20'), // 8 years
           seniority: 'Head',
           departmentId: infraSecArea.id,
@@ -177,107 +177,120 @@ async function main() {
 
   // --- Support Team Leader (Reports to Head Infra) ---
   const supportLeader = await prisma.user.create({
-      data: {
-          email: 'lucy.support@enterprise.com',
-          password,
-          name: 'Lucy Support Lead',
-          roles: { connect: { id: userRole.id } },
-          profile: {
-                create: {
-                    bio: 'Support Leader',
-                    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
-                    birthday: new Date('1990-07-07'),
-                    joinedAt: new Date('2022-04-15'),
-                    seniority: 'Leader',
-                    departmentId: supportTeam.id,
-                    jobTitleId: supportLeaderTitle.id,
-                    managerId: headInfraProfileId
-                }
-          }
+    data: {
+      email: 'lucy.support@enterprise.com',
+      password,
+      name: 'Lucy Support Lead',
+      roles: { connect: { id: userRole.id } },
+      profile: {
+        create: {
+          bio: 'Support Leader',
+          avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
+          birthday: new Date('1990-07-07'),
+          joinedAt: new Date('2022-04-15'),
+          seniority: 'Leader',
+          departmentId: supportTeam.id,
+          jobTitleId: supportLeaderTitle.id,
+          managerId: headInfraProfileId
+        }
       }
+    }
   })
   const supportLeaderProfileId = await getProfileId(supportLeader.id)
 
   // Support Intern (New Hire - joined yesterday)
   await prisma.user.create({
-      data: {
-          email: 'intern@enterprise.com',
-          password,
-          name: 'Bob Intern',
-          roles: { connect: { id: userRole.id } },
-          profile: {
-              create: {
-                  bio: 'Support Intern',
-                  birthday: new Date('2003-05-12'),
-                  joinedAt: new Date(new Date().setDate(new Date().getDate() - 1)), // Joined yesterday
-                  seniority: 'Intern',
-                  departmentId: supportTeam.id,
-                  jobTitleId: internTitle.id,
-                  managerId: supportLeaderProfileId
-              }
-          }
+    data: {
+      email: 'intern@enterprise.com',
+      password,
+      name: 'Bob Intern',
+      roles: { connect: { id: userRole.id } },
+      profile: {
+        create: {
+          bio: 'Support Intern',
+          birthday: new Date('2003-05-12'),
+          joinedAt: new Date(new Date().setDate(new Date().getDate() - 1)), // Joined yesterday
+          seniority: 'Intern',
+          departmentId: supportTeam.id,
+          jobTitleId: internTitle.id,
+          managerId: supportLeaderProfileId
+        }
       }
+    }
   })
 
   // ... (previous user/org seed code) ...
 
   // 5. Create News
   console.log('📰 Seeding News...')
-  
+
   const newsItems = [
     {
-        title: "Fami Lança novo projeto de expansão",
-        summary: "Hoje, 10/11, durante a nossa Reunião Geral, anunciamos os planos de expansão para o próximo triênio...",
-        content: "<p>Hoje, 10/11, durante a nossa Reunião Geral, anunciamos os planos de expansão para o próximo triênio. O projeto visa dobrar a capacidade de atendimento...</p>",
-        image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=500",
-        category: "Corporativo",
-        publishDate: new Date('2025-11-10')
+      title: "Fami Lança novo projeto de expansão",
+      summary: "Hoje, 10/11, durante a nossa Reunião Geral, anunciamos os planos de expansão para o próximo triênio...",
+      content: "<p>Hoje, 10/11, durante a nossa Reunião Geral, anunciamos os planos de expansão para o próximo triênio. O projeto visa dobrar a capacidade de atendimento...</p>",
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=500",
+      category: "Corporativo",
+      publishDate: new Date('2025-11-10')
     },
     {
-        title: "Assessores com Certificação CFP",
-        summary: "Parabenizamos nossos novos assessores certificados! A qualificação contínua é nosso pilar...",
-        content: "<p>Parabenizamos nossos novos assessores certificados! A qualificação contínua é nosso pilar para entregar excelência...</p>",
-        image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?auto=format&fit=crop&q=80&w=500",
-        category: "RH",
-        publishDate: new Date('2025-09-24')
+      title: "Assessores com Certificação CFP",
+      summary: "Parabenizamos nossos novos assessores certificados! A qualificação contínua é nosso pilar...",
+      content: "<p>Parabenizamos nossos novos assessores certificados! A qualificação contínua é nosso pilar para entregar excelência...</p>",
+      image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?auto=format&fit=crop&q=80&w=500",
+      category: "RH",
+      publishDate: new Date('2025-09-24')
     },
     {
-        title: "Resultados do Terceiro Trimestre",
-        summary: "Apresentamos crescimento de 25% no AUM. Confira o relatório completo na área de RI...",
-        content: "<p>Apresentamos crescimento de 25% no AUM. Confira o relatório completo na área de RI. Os destaques ficaram para...</p>",
-        image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=500",
-        category: "Financeiro",
-        publishDate: new Date('2025-10-15')
+      title: "Resultados do Terceiro Trimestre",
+      summary: "Apresentamos crescimento de 25% no AUM. Confira o relatório completo na área de RI...",
+      content: "<p>Apresentamos crescimento de 25% no AUM. Confira o relatório completo na área de RI. Os destaques ficaram para...</p>",
+      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=500",
+      category: "Financeiro",
+      publishDate: new Date('2025-10-15')
     },
     {
-        title: "Inteligência Artificial na Saúde",
-        summary: "Novo módulo de IA implementado para auxiliar diagnósticos precoces em nossas clínicas parceiras.",
-        content: "<p>Novo módulo de IA implementado para auxiliar diagnósticos precoces. A tecnologia utiliza deep learning para...</p>",
-        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=500",
-        category: "Tecnologia",
-        publishDate: new Date('2025-10-18')
+      title: "Inteligência Artificial na Saúde",
+      summary: "Novo módulo de IA implementado para auxiliar diagnósticos precoces em nossas clínicas parceiras.",
+      content: "<p>Novo módulo de IA implementado para auxiliar diagnósticos precoces. A tecnologia utiliza deep learning para...</p>",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=500",
+      category: "Tecnologia",
+      publishDate: new Date('2025-10-18')
     },
     {
-        title: "Programa de Bem-Estar 2026",
-        summary: "Inscreva-se nas novas atividades de yoga, meditação e ginástica laboral disponíveis no app.",
-        content: "<p>Inscreva-se nas novas atividades de yoga, meditação e ginástica laboral. O programa visa melhorar a qualidade de vida...</p>",
-        image: "https://images.unsplash.com/photo-1544367563-12123d897573?auto=format&fit=crop&q=80&w=500",
-        category: "Bem-estar",
-        publishDate: new Date('2025-10-20')
+      title: "Programa de Bem-Estar 2026",
+      summary: "Inscreva-se nas novas atividades de yoga, meditação e ginástica laboral disponíveis no app.",
+      content: "<p>Inscreva-se nas novas atividades de yoga, meditação e ginástica laboral. O programa visa melhorar a qualidade de vida...</p>",
+      image: "https://images.unsplash.com/photo-1544367563-12123d897573?auto=format&fit=crop&q=80&w=500",
+      category: "Bem-estar",
+      publishDate: new Date('2025-10-20')
     },
     {
-        title: "Workshop de Cibersegurança",
-        summary: "Proteja seus dados! Participe do treinamento obrigatório sobre phishing e segurança da informação.",
-        content: "<p>Proteja seus dados! Participe do treinamento obrigatório sobre phishing. A segurança da informação é responsabilidade de todos...</p>",
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=500",
-        category: "Segurança",
-        publishDate: new Date('2025-10-25')
+      title: "Workshop de Cibersegurança",
+      summary: "Proteja seus dados! Participe do treinamento obrigatório sobre phishing e segurança da informação.",
+      content: "<p>Proteja seus dados! Participe do treinamento obrigatório sobre phishing. A segurança da informação é responsabilidade de todos...</p>",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=500",
+      category: "Segurança",
+      publishDate: new Date('2025-10-25')
     }
   ]
 
   for (const item of newsItems) {
-      await prisma.news.create({ data: item })
+    await prisma.news.create({ data: item })
   }
+
+  // 6. Create Initial Company Settings
+  console.log('🏢 Seeding Company Settings...')
+  await prisma.companySettings.create({
+    data: {
+      companyName: 'FAMI Capital',
+      slogan: 'Excellence in Asset Management',
+      primaryColor: '#1A2B4B',
+      secondaryColor: '#BFA15F',
+      email: 'contact@famicapital.com',
+      website: 'www.famicapital.com'
+    }
+  })
 
   console.log('✅ Seed finished.')
 }

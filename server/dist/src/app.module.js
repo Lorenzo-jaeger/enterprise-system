@@ -16,12 +16,27 @@ const prisma_module_1 = require("./prisma.module");
 const admin_module_1 = require("./admin/admin.module");
 const mail_module_1 = require("./mail/mail.module");
 const news_module_1 = require("./news/news.module");
+const settings_module_1 = require("./settings/settings.module");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [users_module_1.UsersModule, auth_module_1.AuthModule, prisma_module_1.PrismaModule, admin_module_1.AdminModule, mail_module_1.MailModule, news_module_1.NewsModule],
+        imports: [
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
+            prisma_module_1.PrismaModule,
+            admin_module_1.AdminModule,
+            mail_module_1.MailModule,
+            news_module_1.NewsModule,
+            settings_module_1.SettingsModule,
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(process.cwd(), 'public'),
+                serveRoot: '/',
+            }),
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

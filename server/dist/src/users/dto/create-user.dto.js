@@ -11,10 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateUserDto {
     email;
     password;
     name;
+    jobTitle;
+    branch;
+    phone;
+    certifications;
+    avatarUrl;
+    signatureBackgroundUrl;
     roles;
 }
 exports.CreateUserDto = CreateUserDto;
@@ -32,6 +39,42 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Software Engineer', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "jobTitle", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'SP', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "branch", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '+55 11 99999-9999', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "phone", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'GPTW, PMP', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "certifications", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'https://github.com/shadcn.png', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "avatarUrl", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'https://example.com/bg.png', required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "signatureBackgroundUrl", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.IsString)({ each: true }),

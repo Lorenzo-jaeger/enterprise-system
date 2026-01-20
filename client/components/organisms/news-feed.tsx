@@ -29,7 +29,7 @@ export function NewsFeed() {
     const { token } = useAuthStore()
     const [newsData, setNewsData] = useState<NewsItem[]>([])
     const [loading, setLoading] = useState(true)
-    
+
     // Details Modal State
     const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null)
     const [detailsOpen, setDetailsOpen] = useState(false)
@@ -71,10 +71,10 @@ export function NewsFeed() {
         const updateList = (list: NewsItem[]) => list.map(item => {
             if (item.id === id) {
                 const newLiked = !item.hasLiked
-                return { 
-                    ...item, 
-                    hasLiked: newLiked, 
-                    likes: newLiked ? item.likes + 1 : item.likes - 1 
+                return {
+                    ...item,
+                    hasLiked: newLiked,
+                    likes: newLiked ? item.likes + 1 : item.likes - 1
                 }
             }
             return item
@@ -104,9 +104,9 @@ export function NewsFeed() {
     const handleOpenNews = async (news: NewsItem) => {
         setSelectedNews(news)
         setDetailsOpen(true)
-        
+
         if (!token) return
-        
+
         try {
             const res = await fetch(`http://localhost:3001/news/${news.id}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -171,18 +171,18 @@ export function NewsFeed() {
                     ) : newsData.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-5 h-full divide-x divide-border/40">
                             {/* Featured News */}
-                            <div 
+                            <div
                                 className="md:col-span-3 h-full min-h-[300px] relative group cursor-pointer shadow-sm transition-all duration-300 hover:shadow-lg overflow-hidden"
                                 onClick={() => handleOpenNews(featured)}
                             >
-                                <div 
+                                <div
                                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                     style={{ backgroundImage: `url(${featured.image})` }}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-100" />
-                                
+
                                 <div className="absolute top-4 right-4 z-10">
-                                    <button 
+                                    <button
                                         onClick={(e) => toggleLike(featured.id, e)}
                                         className="group/btn p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all focus:outline-none"
                                     >
@@ -222,15 +222,15 @@ export function NewsFeed() {
                             <div className="md:col-span-2 flex flex-col h-full bg-muted/5 max-h-[450px]">
                                 <div className="flex-1 flex flex-col overflow-y-auto">
                                     {others.map((item, i) => (
-                                        <div 
-                                            key={item.id} 
+                                        <div
+                                            key={item.id}
                                             onClick={() => handleOpenNews(item)}
                                             className={`flex gap-4 px-4 py-3 cursor-pointer group hover:bg-muted/50 transition-colors ${i !== others.length - 1 ? 'border-b border-border/40' : ''}`}
                                         >
                                             <div className="h-16 w-20 rounded-lg overflow-hidden flex-shrink-0 bg-muted relative ring-1 ring-border/10">
-                                                    <img 
-                                                    src={item.image || ''} 
-                                                    alt={item.title} 
+                                                <img
+                                                    src={item.image || ''}
+                                                    alt={item.title}
                                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                                 />
                                             </div>
@@ -239,7 +239,7 @@ export function NewsFeed() {
                                                     <h4 className="text-[13px] font-medium leading-snug tracking-tight text-foreground/90 group-hover:text-primary transition-colors line-clamp-2">
                                                         {item.title}
                                                     </h4>
-                                                    <button 
+                                                    <button
                                                         onClick={(e) => toggleLike(item.id, e)}
                                                         className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-muted rounded-full focus:outline-none"
                                                     >
@@ -259,8 +259,8 @@ export function NewsFeed() {
                                     ))}
                                 </div>
                                 <div className="p-3 border-t border-border/40 bg-background/50">
-                                    <Button 
-                                        variant="ghost" 
+                                    <Button
+                                        variant="ghost"
                                         onClick={() => setAllNewsOpen(true)}
                                         className="w-full text-xs font-medium h-8 rounded-lg text-muted-foreground hover:text-foreground"
                                     >
@@ -281,7 +281,7 @@ export function NewsFeed() {
             <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
                 <DialogContent className="max-w-3xl p-0 overflow-hidden gap-0 bg-background border-border shadow-2xl">
                     <div className="relative h-64 w-full">
-                         <div 
+                        <div
                             className="absolute inset-0 bg-cover bg-center"
                             style={{ backgroundImage: `url(${selectedNews?.image})` }}
                         />
@@ -306,12 +306,12 @@ export function NewsFeed() {
                         </div>
                     </ScrollArea>
                     <DialogFooter className="p-4 border-t bg-muted/20 flex justify-between items-center w-full sm:justify-between">
-                         <div className="text-xs text-muted-foreground flex items-center gap-1">
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
                             <Eye className="h-3 w-3" />
                             Visualizado por você e outros {selectedNews?.views} colegas
                         </div>
-                        <Button 
-                            variant={selectedNews?.hasLiked ? "default" : "secondary"} 
+                        <Button
+                            variant={selectedNews?.hasLiked ? "default" : "secondary"}
                             onClick={() => selectedNews && toggleLike(selectedNews.id)}
                             className="gap-2"
                         >
@@ -324,7 +324,7 @@ export function NewsFeed() {
 
             {/* All News Modal */}
             <Dialog open={allNewsOpen} onOpenChange={setAllNewsOpen}>
-                <DialogContent className="max-w-4xl h-[85vh] flex flex-col p-0 gap-0 bg-background border-border shadow-2xl">
+                <DialogContent className="w-[95vw] sm:max-w-[85vw] h-[90vh] flex flex-col p-0 gap-0 bg-background border-border shadow-2xl">
                     <DialogHeader className="p-6 border-b pb-4 bg-muted/10">
                         <div className="flex items-center justify-between">
                             <DialogTitle className="text-xl font-semibold tracking-tight">Central de Notícias</DialogTitle>
@@ -332,15 +332,15 @@ export function NewsFeed() {
                         <div className="flex gap-3 mt-4">
                             <div className="relative flex-1">
                                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                                <Input 
-                                    placeholder="Buscar por título ou assunto..." 
+                                <Input
+                                    placeholder="Buscar por título ou assunto..."
                                     className="pl-9 bg-background/50 border-border/50 focus:bg-background"
                                     value={filters.search}
                                     onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                                 />
                             </div>
-                            <Select 
-                                value={filters.category} 
+                            <Select
+                                value={filters.category}
                                 onValueChange={(val) => setFilters(prev => ({ ...prev, category: val }))}
                             >
                                 <SelectTrigger className="w-[180px] bg-background/50 border-border/50">
@@ -354,21 +354,21 @@ export function NewsFeed() {
                             </Select>
                         </div>
                     </DialogHeader>
-                    <ScrollArea className="flex-1 p-6 bg-muted/5">
+                    <div className="flex-1 overflow-y-auto p-6 min-h-0 bg-muted/5">
                         {loadingAll ? (
                             <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {allNews.map(item => (
-                                    <Card 
-                                        key={item.id} 
+                                    <Card
+                                        key={item.id}
                                         className="cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group overflow-hidden border-border/60 bg-card"
                                         onClick={() => handleOpenNews(item)}
                                     >
                                         <div className="aspect-video relative overflow-hidden bg-muted">
-                                            <img 
-                                                src={item.image || ''} 
-                                                alt={item.title} 
+                                            <img
+                                                src={item.image || ''}
+                                                alt={item.title}
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             />
                                             <Badge className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 border-none backdrop-blur-sm text-[10px]">
@@ -396,7 +396,7 @@ export function NewsFeed() {
                                 )}
                             </div>
                         )}
-                    </ScrollArea>
+                    </div>
                 </DialogContent>
             </Dialog>
         </>
