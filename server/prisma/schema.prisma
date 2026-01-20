@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -15,6 +15,12 @@ model User {
   email     String   @unique
   password  String
   name      String?
+  jobTitle      String?
+  branch        String?
+  phone         String?
+  certifications String?
+  avatarUrl     String?
+  signatureBackgroundUrl String?
   
   // Relations
   roles     Role[]
@@ -158,4 +164,21 @@ model AuditLog {
   user      User     @relation(fields: [userId], references: [id])
   
   createdAt DateTime @default(now())
+}
+
+model CompanySettings {
+  id            String   @id @default(uuid())
+  companyName   String   @default("FAMI Capital")
+  slogan        String?
+  logoUrl       String?
+  primaryColor  String   @default("#1A2B4B") // Navy Blue from logo
+  secondaryColor String  @default("#BFA15F") // Gold from logo
+  
+  website       String?
+  email         String?
+  phone         String?
+  address       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

@@ -7,11 +7,11 @@ import { useEffect, useState } from "react"
 import { useAuthStore } from "@/lib/store/auth-store"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { 
-    DropdownMenu, 
-    DropdownMenuContent, 
-    DropdownMenuItem, 
-    DropdownMenuTrigger 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 
 interface PersonData {
@@ -73,27 +73,27 @@ export function BirthdayList({ className }: { className?: string }) {
                 <div className="flex items-center justify-between">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="focus:outline-none group">
-                             <CardTitle className="text-sm font-semibold tracking-tight flex items-center gap-2 group-hover:text-primary transition-colors cursor-pointer">
-                                {activeTab === 'birthdays' && <Cake className="h-4 w-4 text-pink-500" />}
-                                {activeTab === 'anniversaries' && <Gift className="h-4 w-4 text-orange-500" />}
-                                {activeTab === 'new_hires' && <div className="h-4 w-4 rounded-full bg-green-500 flex items-center justify-center text-[10px] text-white font-bold">+</div>}
+                            <CardTitle className="text-sm font-semibold tracking-tight flex items-center gap-2 group-hover:text-primary transition-colors cursor-pointer">
+                                {activeTab === 'birthdays' && <Cake className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />}
+                                {activeTab === 'anniversaries' && <Gift className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />}
+                                {activeTab === 'new_hires' && <div className="h-4 w-4 rounded-full flex items-center justify-center text-[10px] text-black font-bold" style={{ backgroundColor: 'var(--icon-color)' }}>+</div>}
                                 <span>{getTitle()}</span>
                                 <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-primary transition-colors ml-1" />
                             </CardTitle>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" className="w-[200px]">
                             <DropdownMenuItem onClick={() => setActiveTab('birthdays')} className="gap-2 cursor-pointer">
-                                <Cake className="h-4 w-4 text-pink-500" />
+                                <Cake className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />
                                 <span>Aniversariantes</span>
                                 {activeTab === 'birthdays' && <Check className="h-3 w-3 ml-auto text-primary" />}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setActiveTab('anniversaries')} className="gap-2 cursor-pointer">
-                                <Home className="h-4 w-4 text-orange-500" />
+                                <Home className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />
                                 <span>Tempo de Casa</span>
                                 {activeTab === 'anniversaries' && <Check className="h-3 w-3 ml-auto text-primary" />}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setActiveTab('new_hires')} className="gap-2 cursor-pointer">
-                                <UserPlus className="h-4 w-4 text-green-500" />
+                                <UserPlus className="h-4 w-4" style={{ color: 'var(--icon-color)' }} />
                                 <span>Novos Colaboradores</span>
                                 {activeTab === 'new_hires' && <Check className="h-3 w-3 ml-auto text-primary" />}
                             </DropdownMenuItem>
@@ -108,9 +108,9 @@ export function BirthdayList({ className }: { className?: string }) {
                     <div className="flex flex-col">
                         {displayList.map((person, i) => (
                             <div key={i} className={`relative flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted/30 ${i !== displayList.length - 1 ? 'border-b border-border/40' : ''}`}>
-                                <Avatar className={`h-8 w-8 border ${person.isToday || activeTab === 'new_hires' ? 'border-pink-200 dark:border-pink-900' : 'border-transparent'}`}>
+                                <Avatar className={`h-8 w-8 border ${person.isToday || activeTab === 'new_hires' ? 'border-[var(--icon-color)]' : 'border-transparent'}`}>
                                     <AvatarImage src={person.img || undefined} />
-                                    <AvatarFallback className="text-[10px] bg-pink-50 text-pink-600 dark:bg-pink-900/50 dark:text-pink-300">
+                                    <AvatarFallback className="text-[10px] bg-muted text-muted-foreground">
                                         {person.name.substring(0, 2).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
@@ -119,20 +119,18 @@ export function BirthdayList({ className }: { className?: string }) {
                                     {/* Conditional Subtext based on Tab */}
                                     {activeTab === 'birthdays' ? (
                                         person.isToday ? (
-                                            <p className="text-[10px] text-pink-500 font-bold tracking-wide uppercase">Happy Birthday!</p>
+                                            <p className="text-[10px] font-bold tracking-wide uppercase" style={{ color: 'var(--icon-color)' }}>Happy Birthday!</p>
                                         ) : (
                                             <div className="flex items-center gap-1.5">
-                                                <span className="w-1 h-1 rounded-full bg-blue-400" />
+                                                <span className="w-1 h-1 rounded-full bg-muted-foreground" />
                                                 <p className="text-[11px] text-muted-foreground font-medium">Amanhã</p>
                                             </div>
                                         )
-                                    ) : activeTab === 'anniversaries' ? (
-                                        <p className="text-[11px] text-orange-500 font-medium">{person.role}</p>
                                     ) : (
-                                        <p className="text-[11px] text-green-600 font-medium">{person.role}</p>
+                                        <p className="text-[11px] font-medium" style={{ color: 'var(--icon-color)' }}>{person.role}</p>
                                     )}
                                 </div>
-                                {activeTab === 'birthdays' && person.isToday && <Gift className="h-3.5 w-3.5 text-pink-400" />}
+                                {activeTab === 'birthdays' && person.isToday && <Gift className="h-3.5 w-3.5" style={{ color: 'var(--icon-color)' }} />}
                             </div>
                         ))}
                     </div>

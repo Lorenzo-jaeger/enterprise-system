@@ -267,6 +267,17 @@ async function main() {
     for (const item of newsItems) {
         await prisma.news.create({ data: item });
     }
+    console.log('🏢 Seeding Company Settings...');
+    await prisma.companySettings.create({
+        data: {
+            companyName: 'FAMI Capital',
+            slogan: 'Excellence in Asset Management',
+            primaryColor: '#1A2B4B',
+            secondaryColor: '#BFA15F',
+            email: 'contact@famicapital.com',
+            website: 'www.famicapital.com'
+        }
+    });
     console.log('✅ Seed finished.');
 }
 main()

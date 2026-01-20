@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/theme-provider"
+import { CompanyProvider } from "@/lib/context/company-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,11 +14,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-import { Toaster } from "@/components/ui/sonner";
-
-import { ThemeProvider } from "@/components/theme-provider"
-import { UserNav } from "@/components/organisms/user-nav"
 
 export const metadata: Metadata = {
   title: "Enterprise System",
@@ -34,13 +32,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
+          <CompanyProvider>
             {children}
             <Toaster />
+          </CompanyProvider>
         </ThemeProvider>
       </body>
     </html>

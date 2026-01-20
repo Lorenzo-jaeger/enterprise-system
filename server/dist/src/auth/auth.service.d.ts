@@ -26,6 +26,12 @@ export declare class AuthService {
         email: string;
         password: string;
         name: string | null;
+        jobTitle: string | null;
+        branch: string | null;
+        phone: string | null;
+        certifications: string | null;
+        avatarUrl: string | null;
+        signatureBackgroundUrl: string | null;
         resetToken: string | null;
         resetTokenExpiry: Date | null;
         createdAt: Date;

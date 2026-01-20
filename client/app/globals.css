@@ -47,79 +47,130 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+  /* More rounded (12px) for Apple feel */
+
+  /* Apple-like Light Mode Palette */
+  --background: #FBFBFD;
+  /* Subtle off-white */
+  --foreground: #1D1D1F;
+
+  --card: #FFFFFF;
+  --card-foreground: #1D1D1F;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1D1D1F;
+
+  /* Default Primary (Navy) - fallback */
+  --primary: #1A2B4B;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #BFA15F;
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #F5F5F7;
+  --muted-foreground: #86868B;
+
+  --accent: #F5F5F7;
+  --accent-foreground: #1D1D1F;
+
+  --destructive: #FF3B30;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E5E5EA;
+  --input: #E5E5EA;
+  --ring: #1A2B4B;
+
+  --chart-1: #1A2B4B;
+  --chart-2: #BFA15F;
+  --chart-3: #5ac8fa;
+  --chart-4: #4cd964;
+  --chart-5: #ffcc00;
+
+  --sidebar: #f7f7f8;
+  /* Apple sidebar gray */
+  --sidebar-foreground: #1d1d1f;
+  --sidebar-primary: #1A2B4B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #e5e5ea;
+  --sidebar-accent-foreground: #1d1d1f;
+  --sidebar-border: #E5E5EA;
+  --sidebar-ring: #1A2B4B;
+
+  --icon-color: #BFA15F;
+  /* FORCE GOLD ICONS EVERYWHERE */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Apple-like Dark Mode */
+  --background: #000000;
+  /* True black for OLED/Apple feel, or #1C1C1E */
+  --foreground: #F5F5F7;
+
+  --card: #1C1C1E;
+  /* Dark Gray Card */
+  --card-foreground: #FFFFFF;
+
+  --popover: #1C1C1E;
+  --popover-foreground: #FFFFFF;
+
+  /* Primary becomes GOLD in Dark Mode as requested */
+  --primary: #BFA15F;
+  --primary-foreground: #000000;
+  /* Text on Gold button should be black */
+
+  --secondary: #1A2B4B;
+  /* Secondary becomes navy blue in dark mode for contrast? Or keep gold? User said "buttons in gold would be better". */
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #2C2C2E;
+  --muted-foreground: #86868B;
+
+  --accent: #2C2C2E;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #FF453A;
+
+  --border: #38383A;
+  --input: #38383A;
+  --ring: #BFA15F;
+
+  --chart-1: #BFA15F;
+  --chart-2: #1A2B4B;
+  --chart-3: #5ac8fa;
+
+  --sidebar: #121212;
+  /* Slightly lighter than bg */
+  --sidebar-foreground: #F5F5F7;
+  --sidebar-primary: #BFA15F;
+  /* Sidebar active item gold */
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #2C2C2E;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #2C2C2E;
+  --sidebar-ring: #BFA15F;
+
+  --icon-color: #BFA15F;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Global Icon override */
+  .lucide {
+    color: var(--icon-color);
+  }
+
+  /* Exception for buttons text failure (white text on navy button in light mode shouldn't have gold icons?) */
+  /* If button is primary, text is primary-foreground. */
+  .bg-primary .lucide {
+    color: currentColor;
+    /* Inherit white/black from button text */
   }
 }

@@ -29,59 +29,57 @@ let AdminService = class AdminService {
         }
     }
     async listTables() {
-        const query = `
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public' 
-      ORDER BY table_name;
-    `;
-        const result = await this.prisma.$queryRawUnsafe(query);
-        return result.map((row) => row.table_name);
+        const query = `SELECT name as table_name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_prisma_%';`;
+        try {
+            const result = await this.prisma.$queryRawUnsafe(query);
+            return result.map((row) => row.table_name);
+        }
+        catch (e) {
+            return [];
+        }
     }
     async getBirthdays() {
-        const query = `
-        SELECT u.name, p."avatarUrl", p.bio, p.birthday, jt.name as "jobTitle"
-        FROM "User" u
-        JOIN "Profile" p ON u.id = p."userId"
-        LEFT JOIN "JobTitle" jt ON p."jobTitleId" = jt.id
-        WHERE 
-            EXTRACT(MONTH FROM p.birthday) = EXTRACT(MONTH FROM CURRENT_DATE)
-            AND (
-                EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE)
-                OR EXTRACT(DAY FROM p.birthday) = EXTRACT(DAY FROM CURRENT_DATE + INTERVAL '1 day')
-            )
-        LIMIT 10;
-      `;
-        const result = await this.prisma.$queryRawUnsafe(query);
-        return result.map((r) => ({
-            name: r.name,
-            role: r.jobTitle || r.bio || 'Employee',
-            img: r.avatarUrl,
-            isToday: new Date(r.birthday).getDate() === new Date().getDate()
+        const today = new Date();
+        const profiles = await this.prisma.profile.findMany({
+            where: { birthday: { not: null } },
+            include: { user: true, jobTitle: true }
+        });
+        const upcoming = profiles.filter(p => {
+            if (!p.birthday)
+                return false;
+            const bday = new Date(p.birthday);
+            return bday.getMonth() === today.getMonth() &&
+                (bday.getDate() === today.getDate() || bday.getDate() === today.getDate() + 1);
+        });
+        return upcoming.map((p) => ({
+            name: p.user.name,
+            role: p.jobTitle?.name || 'Employee',
+            img: p.avatarUrl,
+            isToday: new Date(p.birthday).getDate() === today.getDate()
         }));
     }
     async getWorkAnniversaries() {
-        const query = `
-        SELECT u.name, p."avatarUrl", p."joinedAt", jt.name as "jobTitle"
-        FROM "User" u
-        JOIN "Profile" p ON u.id = p."userId"
-        LEFT JOIN "JobTitle" jt ON p."jobTitleId" = jt.id
-        WHERE 
-            p."joinedAt" IS NOT NULL
-            AND EXTRACT(MONTH FROM p."joinedAt") = EXTRACT(MONTH FROM CURRENT_DATE)
-            AND EXTRACT(DAY FROM p."joinedAt") = EXTRACT(DAY FROM CURRENT_DATE)
-            AND EXTRACT(YEAR FROM p."joinedAt") < EXTRACT(YEAR FROM CURRENT_DATE)
-        LIMIT 10;
-      `;
-        const result = await this.prisma.$queryRawUnsafe(query);
-        return result.map((r) => {
-            const joinedYear = new Date(r.joinedAt).getFullYear();
-            const currentYear = new Date().getFullYear();
+        const today = new Date();
+        const profiles = await this.prisma.profile.findMany({
+            where: { joinedAt: { not: null } },
+            include: { user: true, jobTitle: true }
+        });
+        const anns = profiles.filter(p => {
+            if (!p.joinedAt)
+                return false;
+            const joinDate = new Date(p.joinedAt);
+            return joinDate.getMonth() === today.getMonth() &&
+                joinDate.getDate() === today.getDate() &&
+                joinDate.getFullYear() < today.getFullYear();
+        });
+        return anns.map((p) => {
+            const joinedYear = new Date(p.joinedAt).getFullYear();
+            const currentYear = today.getFullYear();
             const years = currentYear - joinedYear;
             return {
-                name: r.name,
+                name: p.user.name,
                 role: `${years} Ano${years > 1 ? 's' : ''} de Casa`,
-                img: r.avatarUrl,
+                img: p.avatarUrl,
                 date: "Hoje"
             };
         });
