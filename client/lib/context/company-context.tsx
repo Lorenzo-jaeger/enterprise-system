@@ -51,12 +51,9 @@ export function CompanyProvider({ children }: { children: React.ReactNode }) {
         const root = document.documentElement
         const isDark = currentTheme === 'dark' || root.classList.contains('dark')
 
-        // COLOR LOGIC:
-        // Dark Mode: Primary = Gold (Secondary Color from settings), Secondary = Navy (Primary from settings)
-        // Light Mode: Primary = Navy (Primary form settings), Secondary = Gold (Secondary from settings)
-
-        const primary = isDark ? settings.secondaryColor : settings.primaryColor
-        const secondary = isDark ? settings.primaryColor : settings.secondaryColor
+        // Always use Primary from settings as --primary for consistent brand details
+        const primary = settings.primaryColor
+        const secondary = settings.secondaryColor
 
         // Safety check if colors exist
         if (primary) {

@@ -17,6 +17,7 @@ const admin_module_1 = require("./admin/admin.module");
 const mail_module_1 = require("./mail/mail.module");
 const news_module_1 = require("./news/news.module");
 const settings_module_1 = require("./settings/settings.module");
+const analytics_module_1 = require("./analytics/analytics.module");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 let AppModule = class AppModule {
@@ -32,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             mail_module_1.MailModule,
             news_module_1.NewsModule,
             settings_module_1.SettingsModule,
+            analytics_module_1.AnalyticsModule,
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(process.cwd(), 'public'),
                 serveRoot: '/',

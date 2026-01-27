@@ -26,6 +26,7 @@ model User {
   roles     Role[]
   profile   Profile?
   auditLogs AuditLog[]
+  pageViews PageView[]
 
   resetToken       String?   @unique
   resetTokenExpiry DateTime?
@@ -150,6 +151,17 @@ model NewsView {
   
   profileId String
   profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  viewedAt  DateTime @default(now())
+}
+
+model PageView {
+  id        String   @id @default(uuid())
+  pageUrl   String
+  pageName  String?
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   
   viewedAt  DateTime @default(now())
 }

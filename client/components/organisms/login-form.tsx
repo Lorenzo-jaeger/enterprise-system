@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Digite um e-mail válido." }),
+  email: z.string().trim().email({ message: "Digite um e-mail válido." }),
   password: z.string().min(6, { message: "A senha deve ter no mínimo 6 caracteres." }),
 })
 
@@ -62,7 +62,7 @@ export function LoginForm() {
       const profileResponse = await fetch("http://localhost:3001/auth/profile", {
         headers: { Authorization: `Bearer ${data.access_token}` },
       })
-      
+
       const user = await profileResponse.json()
 
       setAuth(data.access_token, user)

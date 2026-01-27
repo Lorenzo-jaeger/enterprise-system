@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider"
 import { CompanyProvider } from "@/lib/context/company-context";
+import { PageTracker } from "@/components/page-tracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CompanyProvider>
+            <PageTracker />
             {children}
             <Toaster />
           </CompanyProvider>

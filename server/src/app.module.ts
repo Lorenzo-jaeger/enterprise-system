@@ -8,6 +8,7 @@ import { AdminModule } from './admin/admin.module';
 import { MailModule } from './mail/mail.module';
 import { NewsModule } from './news/news.module';
 import { SettingsModule } from './settings/settings.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -20,6 +21,7 @@ import { join } from 'path';
     MailModule,
     NewsModule,
     SettingsModule,
+    AnalyticsModule,
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'), // Serve files from project root public folder
       serveRoot: '/',
